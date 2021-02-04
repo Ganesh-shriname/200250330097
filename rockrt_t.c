@@ -61,6 +61,54 @@ char buffer[500]
     saddr.sin_port = htons(5678);
     bind(sfd, (struct sockaddr *)&saddr, sizeof(struct sockaddr_in));
     listen(sfd,10);
+	int ret, client_fd;
+    struct sockaddr_in server_addr;
+    int no[1];
+    
+    client_fd = socket(AF_INET, SOCK_STREAM, 0);
+    printf("client socket created: %d\n", client_fd);
+
+    printf("client is connecting to server socket.\n");
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(SERVER_PORT);
+    inet_aton(SERVER_IP, &server_addr.sin_addr);
+    ret = connect(client_fd, (struct sockaddr*)&server_addr, sizeof(server_addr));
+    printf("client is connected to server socket: %d\n", ret);
+
+    do {
+          printf("acceleration_rocket client: ");
+        no[0] = rand() % 20;
+        write(client_fd, no, sizeof(no));
+       	int i = 0;  
+		printf("%d\n",no[0]);
+		while(i != 10000)
+		{
+			i++;
+		}
+		sleep(1);
+            }while( 1000 != 0);
+
+   
+    close(client_fd);
+    printf("client closed socket connection.\n");
+   
+
+    do {
+        
+        printf("gyro_rocket client: ");
+        no[0] = rand() % 360;
+        write(client_fd, no, sizeof(no));
+       	int i = 0;  
+		printf("%d\n",no[0]);
+		while(i != 10000)
+		{
+			i++;
+		}
+		sleep(1);
+            }while( 1000 != 0);
+
+}
+
 
     len = sizeof(struct sockaddr_in);
     cfd= accept(sfd, (struct sockaddr *)&caddr, &len);
@@ -106,18 +154,6 @@ void Temperature_Thrusters(float)
 			printf("given data range is not in range")
 		}
 
-void acceleration_rocket(float);
-                {
-                 int i;
-                if(for(i=2;i<20;i++))
-                {
-                        printf("%d",rand());
-                }
-                 else
-                        {
-                         printf("given rocket data is not in range");
-                        }
-               }
 
 void gyro_Rocket(float);
                 {
